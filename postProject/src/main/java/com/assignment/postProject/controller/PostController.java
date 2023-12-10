@@ -22,14 +22,15 @@ public class PostController {
 	
 	// 게시판에 따른 게시글 목록 페이지 호출
 	@GetMapping("/post")
-	public String postList(Model model, @RequestParam String boardCd) {
+	public String postList(Model model, @RequestParam String boardCd, @RequestParam String boardNm) {
 		log.info("PostController - postList()");
-		log.info("boardCd: {}", boardCd);
 		
 		// 게시글 목록 가져오기
-//		List<PostDto> postList = postService.findPostList(boardCd);
-//		
-//		model.addAttribute("postList", postList);
+		List<PostDto> postList = postService.findPostList(boardCd);
+		
+		model.addAttribute("postList", postList);
+		model.addAttribute("boardCd", boardCd);
+		model.addAttribute("boardNm", boardNm);
 		
 		return "post";
 	};

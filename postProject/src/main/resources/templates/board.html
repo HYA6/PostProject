@@ -3,7 +3,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/default}">
     <div layout:fragment="body">
-		<table border="1" align="center">
+		<table border="1" align="center" width="50%">
 			<tr align="center">
 				<td>게시판</td>
 			</tr>
@@ -11,7 +11,8 @@
 				<td th:if="${boardList.size() == 0}">게시판이 없습니다.</td>
 				<td th:if="${boardList.size() != 0}">
 					<div th:each="boardList:${boardList}">
-						<a th:href="@{/post(boardCd=${boardList.boardCd})}" th:text="${boardList.boardNm}"></a>
+						<a th:href="@{/post(boardCd=${boardList.boardCd}, boardNm=${boardList.boardNm})}" 
+							th:text="${boardList.boardNm}"></a>
 					</div>
 				</td>
 			</tr>

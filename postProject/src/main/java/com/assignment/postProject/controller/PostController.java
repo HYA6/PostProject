@@ -118,11 +118,21 @@ public class PostController {
 	
 	// 게시글 수정하기
 	@PostMapping("/setPost")
-	public String setPost(PostDto postDto, RedirectAttributes re) {
+	public String setPost(PostDto postDto, TagDto tagDto, RedirectAttributes re) {
 		log.info("BoardController - setPost()");
 		log.info("{}", postDto.getRegDt());
 		// 게시글 수정
 		postService.savePost(postDto);
+
+		// 각각의 태그 분리
+		String[] tagStr = tagDto.getTag().split(",");
+		
+		// 태그 수정
+		tagService.saveTag(tagDto, tagStr);
+		
+		// 게시물 태그 수정
+		postTagService.savePostTag(postDto, tagStr);
+		
 		re.addAttribute("postNo", postDto.getPostNo());
 		return "redirect:singlePost";
 	};

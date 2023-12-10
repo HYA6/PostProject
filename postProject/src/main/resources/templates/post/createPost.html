@@ -22,7 +22,7 @@
 				</tr>
 				<tr>
 					<td colspan="2" align="center">
-						<label for="hashtags">해시태그</label>
+						<label for="hashtags">태그</label>
 						<div align="center">
 							<input type="text" id="hashtags" placeholder="Enter로 추가해보세요."/>
 							<div id="hashtags-container"></div>
@@ -32,7 +32,7 @@
 				</tr>
 				<tr align="center">
 					<td colspan="4">
-						<input type="button" value="목록으로"/>
+						<input type="button" value="목록으로" th:onclick="|location.href='@{post(boardCd=${boardCd})}'|"/>
 						<input type="submit" value="저장"/>
 						<input type="hidden" th:value="${boardCd}" name="boardCd"/>
 					</td>
@@ -40,7 +40,7 @@
 			</table>
 		</form>
 		<th:block layout:fragment="script">
-			<script src="js/createPost.js"></script>
+			<script src="js/post.js"></script>
 		</th:block>
 	</div>
 </html>

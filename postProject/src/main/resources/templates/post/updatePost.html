@@ -5,25 +5,30 @@
     <div layout:fragment="body">
 		<form action="setPost" method="post">
 			<table border="1" align="center" width="50%">
-				<tr align="center">
+				<tr>
+					<td align="center">제목</td>
 					<td>
 						<input type="text" th:value="${postDto.postSj}" name="postSj"/>
 					</td>
-					<td>
-						<input type="text" disabled="disabled" th:value="${#dates.format(postDto.regDt, 'yyyy-MM-dd')}" name="regDt"/>
-					</td>
 				</tr>
 				<tr>
-					<td colspan="2" align="center">
+					<td align="center">내용</td>
+					<td>
 						<textarea th:text="${postDto.postCn}" rows="5" name="postCn"></textarea>
 					</td>
 				</tr>
 				<tr th:if="${tagDto.size() != 0}" align="center">
 					<td colspan="2">
 						<div th:each="tagDto:${tagDto}" style="display: inline-block;">
-							<a href="#">
-								#<span th:text="${tagDto.tag}"></span>
-							</a>
+							#<span th:text="${tagDto.tag}"></span>
+							<a th:href="@{deletePostTag(tagNo=${tagDto.tagNo}, postNo=${postDto.postNo})}">X</a>
+						</div>
+						<br/>
+						<label for="hashtags">태그</label>
+						<div align="center">
+							<input type="text" id="hashtags" placeholder="Enter로 추가해보세요."/>
+							<div id="hashtags-container"></div>
+							<input type="hidden" id="hashtags-hidden" name="tag"/>
 						</div>
 					</td>
 				</tr>
@@ -37,5 +42,8 @@
 				</tr>
 			</table>
 		</form>
+		<th:block layout:fragment="script">
+			<script src="js/post.js"></script>
+		</th:block>
 	</div>
 </html>

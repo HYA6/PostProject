@@ -5,7 +5,7 @@
     <div layout:fragment="body">
 		<table border="1" align="center" width="50%">
 			<tr align="center">
-				<td colspan="4" th:text="${boardNm}"></td>
+				<td colspan="5" th:text="${boardNm}"></td>
 			</tr>
 			<tr th:if="${postList.size() == 0}" align="center">
 				<td>게시글이 없습니다.</td>
@@ -27,7 +27,7 @@
 				</tr>
 			</div>
 			<tr align="center">
-				<td colspan="4">
+				<td colspan="5">
 					<form action="createPost" method="post">
 						<input type="button" value="목록으로" onclick="location.href='/'"/>
 						<input type="submit" value="게시글 생성"/>

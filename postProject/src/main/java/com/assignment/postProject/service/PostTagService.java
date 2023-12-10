@@ -38,28 +38,40 @@ public class PostTagService {
 	@Transactional
 	public void savePostTag(PostDto postDto, String[] tagStr) {
 		log.info("PostTagService - savePostTag()");
+		
 		// 게시판 정보 가져오기
 		BoardDef def = boardRepository.findById(postDto.getBoardCd())
 				.orElseThrow(() -> new IllegalArgumentException("게시물 태그 저장 실패! 대상 게시판이 없습니다."));
+		
 		// 게시글 글번호 불러오기
 		int postId = postRepository.findIdByCdAndSj(postDto.getBoardCd(), postDto.getPostSj());
 		// 게시물 정보 가져오기
 		Post post = postRepository.findById(Long.valueOf(postId))
 				.orElseThrow(() -> new IllegalArgumentException("게시물 태그 저장 실패! 대상 게시물이 없습니다."));
 				
+		// 각 태그마다 게시물 태그 저장
 		for(String tagSt: tagStr) {
+			
 			// 태그 ID 불러오기
 			int tagId = tagRepository.findIdByTagAndCd(tagSt, postDto.getBoardCd());
 			Tag tag = tagRepository.findById(Long.valueOf(tagId))
 					.orElseThrow(() -> new IllegalArgumentException("게시물 태그 저장 실패! 대상 게시물이 없습니다."));
-			PostTagDto postTagDto = new PostTagDto();
-			postTagDto.setBoardCd(postDto.getBoardCd());
-			postTagDto.setPostNo(postId);
-			postTagDto.setTagNo(tagId);
-			postTagRepository.save(PostTag.toEntity(postTagDto, post, def, tag));
+			
+			// 있는 태그인지 확인 (태그 중복 저장 방지)
+			int postTagCount = postTagRepository.findByTagAndCd(tagId, postId, postDto.getBoardCd());
+			// 없는 태그면 게시물 태그 저장
+			if (postTagCount == 0) {
+				// 게시물 태그 저장
+				PostTagDto postTagDto = new PostTagDto();
+				postTagDto.setBoardCd(postDto.getBoardCd());
+				postTagDto.setPostNo(postId);
+				postTagDto.setTagNo(tagId);
+				postTagRepository.save(PostTag.toEntity(postTagDto, post, def, tag));
+			};
+			
 		};
 
-	}
+	};
 	
 	// 태그 ID 찾기
 	public List<PostTagDto> findByPostNo(String postNo) {
@@ -68,6 +80,13 @@ public class PostTagService {
 				.stream()
 				.map(postTags -> PostTagDto.toDto(postTags)) // entity를 dto로 변환
 				.collect(Collectors.toList());
+	};
+	
+	// 게시글 태그 삭제
+	@Transactional
+	public void deletePostTag(int tagNo, int postNo) {
+		log.info("PostTagService - deletePostTag()");
+		postTagRepository.deleteByTagAndPost(tagNo, postNo);
 	};
 
 };

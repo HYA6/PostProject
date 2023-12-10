@@ -1,6 +1,5 @@
 package com.assignment.postProject.controller;
 
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -83,9 +82,6 @@ public class PostController {
 	public String insertPost(Model model, PostDto postDto, TagDto tagDto, RedirectAttributes re) {
 		log.info("PostController - insertPost()");
 		
-		// 작성일에 현재 날짜 저장
-		Date date = new Date();
-		postDto.setRegDt(date);
 		// 게시글 저장
 		postService.savePost(postDto);
 		
@@ -103,23 +99,41 @@ public class PostController {
 		return "redirect:post";
 	};
 	
+	// 게시글 수정 페이지 호출
+	@GetMapping("/updatePost")
+	public String updatePost(Model model, @RequestParam String postNo) {
+		log.info("PostController - updatePost()");
+		// 게시글 정보 찾기
+		PostDto postDto = postService.findPost(Long.parseLong(postNo));
+		// 태그 ID 찾기
+		List<PostTagDto> postTagDto = postTagService.findByPostNo(postNo);
+		// 태그 정보 찾기
+		List<TagDto> tagDto = tagService.findTag(postTagDto);
+		
+		model.addAttribute("postDto", postDto);
+		model.addAttribute("tagDto", tagDto);
+		
+		return "post/updatePost";
+	};
+	
 	// 게시글 수정하기
-	@PostMapping("/updatePost")
-	public String updatePost(PostDto postDto, RedirectAttributes re) {
-		log.info("BoardController - updatePost()");
-		// 게시판 수정
+	@PostMapping("/setPost")
+	public String setPost(PostDto postDto, RedirectAttributes re) {
+		log.info("BoardController - setPost()");
+		log.info("{}", postDto.getRegDt());
+		// 게시글 수정
 		postService.savePost(postDto);
 		re.addAttribute("postNo", postDto.getPostNo());
 		return "redirect:singlePost";
 	};
 
 	// 게시글 삭제하기
-	@GetMapping("/deletePost")
-	public String deleteBoard(@RequestParam String postNo, @RequestParam String boardCd, RedirectAttributes re) {
+	@PostMapping("/deletePost")
+	public String deleteBoard(PostDto postDto, RedirectAttributes re) {
 		log.info("BoardController - deleteBoard()");
 		// 게시판 삭제
-		postService.deletePost(Long.parseLong(postNo));
-		re.addAttribute("boardCd", boardCd);
+		postService.deletePost(postDto.getPostNo());
+		re.addAttribute("boardCd", postDto.getBoardCd());
 		return "redirect:post";
 	};
 	

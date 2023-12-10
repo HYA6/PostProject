@@ -1,10 +1,11 @@
 package com.assignment.postProject.entity;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,8 +13,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import com.assignment.postProject.dto.PostDto;
 
@@ -23,6 +26,7 @@ import lombok.NoArgsConstructor;
 
 // 게시물
 @SuppressWarnings("serial")
+@EntityListeners(AuditingEntityListener.class)
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
@@ -43,8 +47,9 @@ public class Post implements Serializable {
 	private String postCn; // 내용
 	@Column
 	private String regstrId; // 작성자 ID
-	@Column
-	private Date regDt; // 작성일
+	@CreationTimestamp
+	@Column(updatable = false)
+	private Timestamp regDt; // 작성일
 	
 	// dto -> entity
     public static Post toEntity(PostDto dto, BoardDef boardDef) {

@@ -1,6 +1,6 @@
 package com.assignment.postProject.dto;
 
-import java.util.Date;
+import java.sql.Timestamp;
 
 import com.assignment.postProject.entity.Post;
 
@@ -21,7 +21,7 @@ public class PostDto {
 	private String postSj; // 제목
 	private String postCn; // 내용
 	private String regstrId; // 작성자 ID
-	private Date regDt; // 작성일
+	private Timestamp regDt; // 작성일
 	
 	// entity -> dto
 	public static PostDto toDto(Post post) {

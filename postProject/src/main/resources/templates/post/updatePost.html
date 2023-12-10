@@ -3,14 +3,20 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/default}">
     <div layout:fragment="body">
-		<form action="deletePost" method="post">
+		<form action="setPost" method="post">
 			<table border="1" align="center" width="50%">
 				<tr align="center">
-					<td th:text="${postDto.postSj}"></td>
-					<td th:text="${#dates.format(postDto.regDt, 'yyyy-MM-dd')}"></td>
+					<td>
+						<input type="text" th:value="${postDto.postSj}" name="postSj"/>
+					</td>
+					<td>
+						<input type="text" disabled="disabled" th:value="${#dates.format(postDto.regDt, 'yyyy-MM-dd')}" name="regDt"/>
+					</td>
 				</tr>
 				<tr>
-					<td colspan="2" align="center" th:text="${postDto.postCn}"></td>
+					<td colspan="2" align="center">
+						<textarea th:text="${postDto.postCn}" rows="5" name="postCn"></textarea>
+					</td>
 				</tr>
 				<tr th:if="${tagDto.size() != 0}" align="center">
 					<td colspan="2">
@@ -23,9 +29,8 @@
 				</tr>
 				<tr align="center">
 					<td colspan="2">
-						<input type="button" value="목록으로" th:onclick="|location.href='@{post(boardCd=${postDto.boardCd})}'|"/>
-						<input type="button" value="수정" th:onclick="|location.href='@{updatePost(postNo=${postDto.postNo})}'|"/>
-						<input type="submit" value="삭제"/>
+						<input type="button" value="이전으로" onclick="history.back()"/>
+						<input type="submit" value="수정 완료"/>
 						<input type="hidden" th:value="${postDto.postNo}" name="postNo"/>
 						<input type="hidden" th:value="${postDto.boardCd}" name="boardCd"/>
 					</td>

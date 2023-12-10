@@ -38,7 +38,7 @@ public class BoardService {
 		return BoardDefDto.toDto(def);
 	};
 	
-	// 게시판 저장
+	// 게시판 저장 및 수정
 	@Transactional
 	public void saveBoard(BoardDefDto boardDefDto) {
 		log.info("BoardService - saveBoard()");

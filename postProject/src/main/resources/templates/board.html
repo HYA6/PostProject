@@ -13,6 +13,8 @@
 					<div th:each="boardList:${boardList}">
 						<a th:href="@{post(boardCd=${boardList.boardCd}, boardNm=${boardList.boardNm})}" 
 							th:text="${boardList.boardNm}"></a>
+						<input type="button" value="수정" th:boardCd="${boardList.boardCd}" th:boardNm="${boardList.boardNm}"
+							th:onclick="updateModal(this.getAttribute('boardCd'), this.getAttribute('boardNm'))">
 						<input type="button" value="삭제" th:onclick="|location.href='@{deleteBoard(boardCd=${boardList.boardCd})}'|">
 					</div>
 				</td>
@@ -26,5 +28,22 @@
 				</td>
 			</tr>
 		</table>
+		
+		<!-- 게시판 수정 모달창 -->
+		<div id="boardModal" style="display: none;" align="center">
+			<h2>게시판 이름을 수정하세요.</h2>
+			<form action="updateBoard" method="post">
+				<input type="text" id="boardNmModal" name="boardNm"/>
+				<input type="submit" value="수정 완료"/>
+				<input type="button" value="닫기" onclick="closeModal()"/>
+				<input type="hidden" id="boardCdModal" name="boardCd"/>
+			</form>
+		</div>
+		
+		<th:block layout:fragment="script">
+			<script src="https://code.jquery.com/jquery-3.6.0.slim.js"></script>
+			<script src="js/board.js"></script>
+		</th:block>
+		
 	</div>
 </html>

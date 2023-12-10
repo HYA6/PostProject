@@ -50,6 +50,15 @@ public class BoardController {
 		return "redirect:";
 	};
 	
+	// 게시판 수정하기
+	@PostMapping("/updateBoard")
+	public String updateBoard(BoardDefDto boardDefDto) {
+		log.info("BoardController - updateBoard()");
+		// 게시판 삭제
+		boardService.saveBoard(boardDefDto);
+		return "redirect:";
+	};
+	
 	// 게시판 삭제하기
 	@GetMapping("/deleteBoard")
 	public String deleteBoard(@RequestParam String boardCd) {

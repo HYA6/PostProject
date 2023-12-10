@@ -13,8 +13,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.assignment.postProject.dto.BoardDefDto;
 import com.assignment.postProject.dto.PostDto;
+import com.assignment.postProject.dto.TagDto;
 import com.assignment.postProject.service.BoardService;
 import com.assignment.postProject.service.PostService;
+import com.assignment.postProject.service.PostTagService;
+import com.assignment.postProject.service.TagService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -26,6 +29,10 @@ public class PostController {
 	private BoardService boardService;
 	@Autowired
 	private PostService postService;
+	@Autowired
+	private TagService tagService;
+	@Autowired
+	private PostTagService postTagService;
 	
 	// 게시판에 따른 게시글 목록 페이지 호출
 	@GetMapping("/post")
@@ -65,16 +72,25 @@ public class PostController {
 		return "post/createPost";
 	};
 	
-	// 게시글 저장
+	// 게시글, 태그 저장
 	@PostMapping("/insertPost")
-	public String insertPost(Model model, PostDto postDto, RedirectAttributes re) {
+	public String insertPost(Model model, PostDto postDto, TagDto tagDto, RedirectAttributes re) {
 		log.info("PostController - insertPost()");
 		
 		// 작성일에 현재 날짜 저장
 		Date date = new Date();
 		postDto.setRegDt(date);
-		
+		// 게시글 저장
 		postService.savePost(postDto);
+		
+		// 각각의 태그 분리
+		String[] tagStr = tagDto.getTag().split(",");
+		
+		// 태그 저장
+		tagService.saveTag(tagDto, tagStr);
+		
+		// 게시물 태그 저장
+		postTagService.savePostTag(postDto, tagStr);
 		
 		re.addAttribute("boardCd", postDto.getBoardCd());
 		

@@ -20,6 +20,16 @@
 						<textarea rows="5" name="postCn"></textarea>
 					</td>
 				</tr>
+				<tr>
+					<td colspan="2" align="center">
+						<label for="hashtags">해시태그</label>
+						<div align="center">
+							<input type="text" id="hashtags" placeholder="Enter로 추가해보세요."/>
+							<div id="hashtags-container"></div>
+							<input type="hidden" id="hashtags-hidden" name="tag"/>
+						</div>
+					</td>
+				</tr>
 				<tr align="center">
 					<td colspan="4">
 						<input type="button" value="목록으로"/>
@@ -29,5 +39,8 @@
 				</tr>
 			</table>
 		</form>
+		<th:block layout:fragment="script">
+			<script src="js/createPost.js"></script>
+		</th:block>
 	</div>
 </html>

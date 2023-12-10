@@ -58,7 +58,7 @@ public class PostService {
 		
 		// entity로 변환
 		Post post = Post.toEntity(postDto, def);
-		log.info("post: {}", post.getPostNo());
+//		log.info("post: {}", post.getPostNo());
 		
 		// 게시글 저장 및 수정
 		postRepository.save(post);

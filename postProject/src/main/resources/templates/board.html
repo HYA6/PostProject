@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http//www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default}">
+    <div layout:fragment="body">
+		<table border="1" align="center">
+			<tr align="center">
+				<td>게시판</td>
+			</tr>
+			<tr>
+				<td th:if="${boardList.size() == 0}">게시판이 없습니다.</td>
+				<td th:if="${boardList.size() != 0}">
+					<div th:each="boardList:${boardList}">
+						<a th:href="@{/post(boardCd=${boardList.boardCd})}" th:text="${boardList.boardNm}"></a>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<form action="boardCreate" method="post">
+						<input type="text" name="boardNm" placeholder="게시판 이름을 입력하세요."/>
+						<input type="submit" value="게시판 생성"/>
+					</form>
+				</td>
+			</tr>
+		</table>
+	</div>
+</html>

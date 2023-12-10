@@ -3,16 +3,15 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/default}">
     <div layout:fragment="body">
-		<table>
-			<tr>
-				<td>게시판</td>
+    	<table th:if="${boardList.size() == 0}">
+    		<tr>
+				<td colspan="4">게시판 이름</td>
 			</tr>
-			<tr>
-				<td></td>
+    		<tr>
+				<td>게시글이 없습니다.</td>
 			</tr>
-		</table>
-		
-		<table>
+    	</table>
+		<table th:unless="${boardList.size() == 0}">
 			<tr>
 				<td colspan="4">게시판 이름</td>
 			</tr>

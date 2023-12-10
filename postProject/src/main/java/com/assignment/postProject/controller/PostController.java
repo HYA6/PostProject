@@ -6,9 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import com.assignment.postProject.dto.BoardDefDto;
-import com.assignment.postProject.service.BoardService;
+import com.assignment.postProject.dto.PostDto;
+import com.assignment.postProject.service.PostService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -17,18 +18,20 @@ import lombok.extern.slf4j.Slf4j;
 public class PostController {
 	
 	@Autowired
-	private BoardService boardService;
+	private PostService postService;
 	
-	@GetMapping("/")
-	public String postList(Model model) {
-		log.info("PostController의 postList()");
+	// 게시판에 따른 게시글 목록 페이지 호출
+	@GetMapping("/post")
+	public String postList(Model model, @RequestParam String boardCd) {
+		log.info("PostController - postList()");
+		log.info("boardCd: {}", boardCd);
 		
-		// 게시판 목록 가져오기
-		List<BoardDefDto> boardList = boardService.findBoardList();
+		// 게시글 목록 가져오기
+//		List<PostDto> postList = postService.findPostList(boardCd);
+//		
+//		model.addAttribute("postList", postList);
 		
-		model.addAttribute("boardList", boardList);
-		
-		return "main";
+		return "post";
 	};
 	
 };

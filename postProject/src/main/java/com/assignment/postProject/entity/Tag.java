@@ -12,8 +12,17 @@ import javax.persistence.ManyToOne;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import com.assignment.postProject.dto.TagDto;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
 // 태그
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
 public class Tag {
 	
 	@Id
@@ -26,6 +35,11 @@ public class Tag {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "board_cd", referencedColumnName="boardCd")
-	private BoardDef boardDef;
+	private BoardDef boardDef; // 게시판 분류 코드
+	
+	// dto -> entity
+	public static Tag toEntity(TagDto dto, BoardDef boardDef) {
+		return new Tag(dto.getTagNo(), dto.getTag(), boardDef);
+	};
 	
 };

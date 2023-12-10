@@ -1,21 +1,19 @@
 package com.assignment.postProject.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 
 // 게시물
+@SuppressWarnings("serial")
 @Entity
-public class Post {
+public class Post implements Serializable {
 	
-	@Id
-	@Column(columnDefinition="int")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long postNo; // 글번호
+	@EmbeddedId
+	private PostId postId;
 	@Column
 	private String postSj; // 제목
 	@Column

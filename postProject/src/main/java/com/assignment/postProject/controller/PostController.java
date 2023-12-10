@@ -45,6 +45,18 @@ public class PostController {
 		return "post/post";
 	};
 	
+	// 게시글 한 건 보는 페이지 호출
+	@GetMapping("/singlePost")
+	public String singlePost(Model model, @RequestParam String postNo) {
+		log.info("PostController - singlePost()");
+		
+		PostDto postDto = postService.findPost(Long.parseLong(postNo));
+		
+		model.addAttribute("postDto", postDto);
+		
+		return "post/singlePost";
+	};
+	
 	// 게시글 작성 페이지 호출
 	@PostMapping("/createPost")
 	public String createPost(Model model, String boardCd) {
@@ -66,6 +78,26 @@ public class PostController {
 		
 		re.addAttribute("boardCd", postDto.getBoardCd());
 		
+		return "redirect:post";
+	};
+	
+	// 게시글 수정하기
+	@PostMapping("/updatePost")
+	public String updatePost(PostDto postDto, RedirectAttributes re) {
+		log.info("BoardController - updatePost()");
+		// 게시판 수정
+		postService.savePost(postDto);
+		re.addAttribute("postNo", postDto.getPostNo());
+		return "redirect:singlePost";
+	};
+
+	// 게시글 삭제하기
+	@GetMapping("/deletePost")
+	public String deleteBoard(@RequestParam String postNo, @RequestParam String boardCd, RedirectAttributes re) {
+		log.info("BoardController - deleteBoard()");
+		// 게시판 삭제
+		postService.deletePost(Long.parseLong(postNo));
+		re.addAttribute("boardCd", boardCd);
 		return "redirect:post";
 	};
 	

@@ -19,7 +19,9 @@
 			<div th:if="${postList.size() != 0}">
 				<tr th:each="postList:${postList}">
 					<td th:text="${postList.postNo}"></td>
-					<td th:text="${postList.postSj}"></td>
+					<td>
+						<a th:href="@{singlePost(postNo=${postList.postNo})}" th:text="${postList.postSj}"></a>
+					</td>
 					<td th:text="${postList.regstrId}"></td>
 					<td th:text="${#dates.format(postList.regDt, 'yyyy-MM-dd')}"></td>
 				</tr>

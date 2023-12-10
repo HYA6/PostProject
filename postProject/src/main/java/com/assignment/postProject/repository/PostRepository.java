@@ -9,7 +9,7 @@ import com.assignment.postProject.entity.Post;
 
 public interface PostRepository extends JpaRepository<Post, Long> {
 	
-	@Query(value = "SELECT * FROM Post WHERE board_cd = :board_cd", nativeQuery=true)
+	@Query(value = "SELECT * FROM Post WHERE board_cd = :board_cd ORDER BY post_no DESC", nativeQuery=true)
 	List<Post> findByBoardCd(String board_cd);
 
 };

@@ -11,8 +11,9 @@
 				<td th:if="${boardList.size() == 0}">게시판이 없습니다.</td>
 				<td th:if="${boardList.size() != 0}">
 					<div th:each="boardList:${boardList}">
-						<a th:href="@{/post(boardCd=${boardList.boardCd}, boardNm=${boardList.boardNm})}" 
+						<a th:href="@{post(boardCd=${boardList.boardCd}, boardNm=${boardList.boardNm})}" 
 							th:text="${boardList.boardNm}"></a>
+						<input type="button" value="삭제" th:onclick="|location.href='@{deleteBoard(boardCd=${boardList.boardCd})}'|">
 					</div>
 				</td>
 			</tr>

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.assignment.postProject.dto.BoardDefDto;
 import com.assignment.postProject.service.BoardService;
@@ -46,6 +47,15 @@ public class BoardController {
 		// 게시판 생성
 		boardService.saveBoard(boardDefDto);
 		
+		return "redirect:";
+	};
+	
+	// 게시판 삭제하기
+	@GetMapping("/deleteBoard")
+	public String deleteBoard(@RequestParam String boardCd) {
+		log.info("BoardController - deleteBoard()");
+		// 게시판 삭제
+		boardService.deleteBoard(boardCd);
 		return "redirect:";
 	};
 	

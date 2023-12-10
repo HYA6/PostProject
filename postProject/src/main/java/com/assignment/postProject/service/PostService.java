@@ -3,8 +3,6 @@ package com.assignment.postProject.service;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +24,6 @@ public class PostService {
 	private BoardRepository boardRepository;
 	@Autowired
 	private PostRepository postRepository;
-	@PersistenceContext
-    private EntityManager entityManager;
 	
 	// 게시판에 따른 게시글 전체 목록 가져오기
 	public List<PostDto> findPostList(String boardCd) {
@@ -43,7 +39,15 @@ public class PostService {
 				.collect(Collectors.toList());
 	};
 	
-	// 게시글 저장
+	// 게시글 한 건 찾기
+	public PostDto findPost(long postNo) {
+		log.info("PostService - findPost()");
+		return PostDto.toDto(
+				postRepository.findById(postNo)
+				.orElseThrow(() -> new IllegalArgumentException("게시글 조회 실패! 대상 게시글이 없습니다.")));
+	};
+	
+	// 게시글 저장 및 수정
 	@Transactional
 	public void savePost(PostDto postDto) {
 		log.info("PostService - savePost()");
@@ -54,11 +58,17 @@ public class PostService {
 		
 		// entity로 변환
 		Post post = Post.toEntity(postDto, def);
-		log.info("post: {}", post.getPostSj());
+		log.info("post: {}", post.getPostNo());
 		
-		// 게시글 저장
-		entityManager.detach(post);
+		// 게시글 저장 및 수정
 		postRepository.save(post);
+	};
+	
+	// 게시글 삭제
+	@Transactional
+	public void deletePost(long postNo) {
+		log.info("PostService - deletePost()");
+		postRepository.deleteById(postNo);
 	};
 
 };

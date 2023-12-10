@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http//www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default}">
+    <div layout:fragment="body">
+		<form action="updatePost" method="post">
+			<table border="1" align="center" width="50%">
+				<tr align="center">
+					<td>
+						<input type="text" th:value="${postDto.postSj}" name="postSj"/>
+					</td>
+					<td>
+						<input type="text" disabled="disabled" th:value="${#dates.format(postDto.regDt, 'yyyy-MM-dd')}" name="regDt"/>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2">
+						<textarea th:text="${postDto.postCn}" rows="5" name="postCn"></textarea>
+					</td>
+				</tr>
+				<tr align="center">
+					<td colspan="2">
+						<input type="button" value="목록으로" onclick="location.href='/'"/>
+						<input type="submit" value="게시글 수정"/>
+						<input type="button" value="게시글 삭제" th:onclick="|location.href='@{deletePost(postNo=${postDto.postNo}, boardCd=${postDto.boardCd})}'|"/>
+						<input type="hidden" th:value="${postDto.postNo}" name="postNo"/>
+						<input type="hidden" th:value="${postDto.boardCd}" name="boardCd"/>
+					</td>
+				</tr>
+			</table>
+		</form>
+	</div>
+</html>

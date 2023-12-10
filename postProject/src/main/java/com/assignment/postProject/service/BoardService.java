@@ -31,7 +31,6 @@ public class BoardService {
 	};
 	
 	// 하나의 게시판 정보 찾기
-	@Transactional
 	public BoardDefDto findBoard(String boardCd) {
 		log.info("BoardService - findBoard()");
 		BoardDef def = boardRepository.findById(boardCd)
@@ -44,6 +43,13 @@ public class BoardService {
 	public void saveBoard(BoardDefDto boardDefDto) {
 		log.info("BoardService - saveBoard()");
 		boardRepository.save(BoardDef.toEntity(boardDefDto));
+	}
+	
+	// 게시판 삭제
+	@Transactional
+	public void deleteBoard(String boardCd) {
+		log.info("BoardService - deleteBoard()");
+		boardRepository.deleteById(boardCd);
 	};
 
 };

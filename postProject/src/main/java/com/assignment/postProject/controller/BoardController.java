@@ -1,7 +1,10 @@
 package com.assignment.postProject.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+
+import com.assignment.postProject.service.BoardService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -9,10 +12,16 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class BoardController {
 	
+	@Autowired
+	private BoardService boardService;
+	
 	@GetMapping("/")
-	public String start() {
-		log.info("웹 페이지 시작");
-		return "main";
+	public String boardList() {
+		log.info("BoardController의 boardList()");
+		
+		
+		
+		return "redirect:post";
 	};
 	
 };

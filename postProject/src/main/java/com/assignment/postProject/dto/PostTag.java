@@ -17,5 +17,8 @@ import lombok.extern.slf4j.Slf4j;
 public class PostTag {
 	
 	private long boardTagId; // 게시물 태그 ID
+	private long postNo; // 글번호
+	private String boardCd; // 게시판 분류 코드
+	private long tagNo; // 태그 ID
 	
 };

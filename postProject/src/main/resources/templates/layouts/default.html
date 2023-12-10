@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <title>Future Imperfect by HTML5 UP</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
+    <!-- 각 페이지의 script가 작성될 위치 -->
+    <th:block layout:fragment="script"></th:block>
+    <!-- 각 페이지의 css가 작성될 위치 -->
+    <th:block layout:fragment="css"></th:block>
+</head>
+<body class="is-preload">
+	<!-- Wrapper -->
+	<div id="wrapper">
+		<!-- header -->
+		<div th:replace="fragments/header::header"></div>
+		<!-- main -->
+		<div layout:fragment="main" style="width: 100%;"></div>
+	</div>
+	<!-- footer -->
+	<div th:replace="fragments/footer::footer"></div>
+	
+</body>
+</html>

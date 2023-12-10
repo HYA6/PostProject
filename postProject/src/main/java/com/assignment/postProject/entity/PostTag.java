@@ -23,13 +23,13 @@ public class PostTag {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name="tag_no", referencedColumnName="tagNo")
-	private Tag tag;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name="post_no")
 	@JoinColumn(name="board_cd")
 	private Post post;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(name="tag_no", referencedColumnName="tagNo")
+	private Tag tag;
 	
 };

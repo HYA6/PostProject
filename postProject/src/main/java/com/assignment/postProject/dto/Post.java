@@ -19,6 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 public class Post {
 	
 	private long postNo; // 글번호
+	private String boardCd; // 게시판 분류 코드
 	private String postSj; // 제목
 	private String postCn; // 내용
 	private String regstrId; // 작성자 ID

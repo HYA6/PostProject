@@ -18,5 +18,6 @@ public class Tag {
 	
 	private long tagNo; // 태그 ID
 	private String tag; // 태그
+	private String boardCd; // 게시판 분류 코드
 	
 };

@@ -1,5 +1,8 @@
 package com.assignment.postProject.service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,6 +59,15 @@ public class PostTagService {
 			postTagRepository.save(PostTag.toEntity(postTagDto, post, def, tag));
 		};
 
+	}
+	
+	// 태그 ID 찾기
+	public List<PostTagDto> findByPostNo(String postNo) {
+		log.info("PostTagService - findByPostNo()");
+		return postTagRepository.findByPostNo(postNo)
+				.stream()
+				.map(postTags -> PostTagDto.toDto(postTags)) // entity를 dto로 변환
+				.collect(Collectors.toList());
 	};
 
 };

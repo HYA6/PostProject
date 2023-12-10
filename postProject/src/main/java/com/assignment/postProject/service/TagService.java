@@ -8,6 +8,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.assignment.postProject.dto.PostTagDto;
 import com.assignment.postProject.dto.TagDto;
 import com.assignment.postProject.entity.BoardDef;
 import com.assignment.postProject.entity.Tag;
@@ -45,6 +46,17 @@ public class TagService {
 			};
 		};
 		tagRepository.saveAll(tagList);
+	}
+	
+	// 태그 찾기
+	public List<TagDto> findTag(List<PostTagDto> postTagDto) {
+		log.info("TagService - findTag()");
+		List<TagDto> tagDto = new ArrayList<TagDto>();
+		for (PostTagDto dto : postTagDto) {
+			tagDto.add(TagDto.toDto(tagRepository.findById(dto.getTagNo())
+					.orElseThrow(() -> new IllegalArgumentException("태그 찾기 실패! 대상 태그가 없습니다."))));
+		};
+		return tagDto;
 	};
 
 };

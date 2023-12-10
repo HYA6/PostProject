@@ -13,6 +13,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.assignment.postProject.dto.BoardDefDto;
 import com.assignment.postProject.dto.PostDto;
+import com.assignment.postProject.dto.PostTagDto;
 import com.assignment.postProject.dto.TagDto;
 import com.assignment.postProject.service.BoardService;
 import com.assignment.postProject.service.PostService;
@@ -56,10 +57,15 @@ public class PostController {
 	@GetMapping("/singlePost")
 	public String singlePost(Model model, @RequestParam String postNo) {
 		log.info("PostController - singlePost()");
-		
+		// 게시글 정보 찾기
 		PostDto postDto = postService.findPost(Long.parseLong(postNo));
+		// 태그 ID 찾기
+		List<PostTagDto> postTagDto = postTagService.findByPostNo(postNo);
+		// 태그 정보 찾기
+		List<TagDto> tagDto = tagService.findTag(postTagDto);
 		
 		model.addAttribute("postDto", postDto);
+		model.addAttribute("tagDto", tagDto);
 		
 		return "post/singlePost";
 	};

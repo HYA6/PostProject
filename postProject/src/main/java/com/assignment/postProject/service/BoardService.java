@@ -30,6 +30,15 @@ public class BoardService {
 				.collect(Collectors.toList());
 	};
 	
+	// 하나의 게시판 정보 찾기
+	@Transactional
+	public BoardDefDto findBoard(String boardCd) {
+		log.info("BoardService - findBoard()");
+		BoardDef def = boardRepository.findById(boardCd)
+				.orElseThrow(() -> new IllegalArgumentException("게시판 조회 실패! 대상 게시판이 없습니다."));
+		return BoardDefDto.toDto(def);
+	};
+	
 	// 게시판 저장
 	@Transactional
 	public void saveBoard(BoardDefDto boardDefDto) {

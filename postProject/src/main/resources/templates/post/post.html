@@ -16,24 +16,18 @@
 				<td>작성자</td>
 				<td>작성일</td>
 			</tr>
-			<tr th:if="${postList.size() != 0}">
-				<td>
-					
-				</td>
-				<td>
-					
-				</td>
-				<td>
-					
-				</td>
-				<td>
-					
-				</td>
-			</tr>
+			<div th:if="${postList.size() != 0}">
+				<tr th:each="postList:${postList}">
+					<td th:text="${postList.postNo}"></td>
+					<td th:text="${postList.postSj}"></td>
+					<td th:text="${postList.regstrId}"></td>
+					<td th:text="${#dates.format(postList.regDt, 'yyyy-MM-dd')}"></td>
+				</tr>
+			</div>
 			<tr align="center">
 				<td colspan="4">
-					<form action="" method="post">
-						<input type="button" value="목록으로"/>
+					<form action="createPost" method="post">
+						<input type="button" value="목록으로" onclick="location.href='/'"/>
 						<input type="submit" value="게시글 생성"/>
 						<input type="hidden" th:value="${boardCd}" name="boardCd"/>
 					</form>

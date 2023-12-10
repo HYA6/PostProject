@@ -21,8 +21,8 @@ public class PostTagDto {
 	
 	// entity -> dto
 	public static PostTagDto toDto(PostTag postTag) {
-		return new PostTagDto(postTag.getBoardTagId(), postTag.getPost().getPostId().getPostNo(), 
-				postTag.getPost().getPostId().getBoardDef().getBoardCd(), postTag.getTag().getTagNo());
+		return new PostTagDto(postTag.getBoardTagId(), postTag.getPost().getPostNo(), 
+				postTag.getBoardDef().getBoardCd(), postTag.getTag().getTagNo());
 	};
 	
 };

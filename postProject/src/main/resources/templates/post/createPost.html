@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http//www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default}">
+    <div layout:fragment="body">
+    	<form action="insertPost" method="post">
+			<table border="1" align="center" width="50%">
+					<tr align="center">
+						<td colspan="4">게시글 작성</td>
+					</tr>
+					<tr>
+						<td>제목</td>
+						<td>
+							<input type="text" name="postSj" placeholder="게시글 제목을 작성하세요."/>
+						</td>
+					</tr>
+					<tr>
+						<td>내용</td>
+						<td>
+							<textarea rows="5" name="postCn"></textarea>
+						</td>
+					</tr>
+					<tr align="center">
+						<td colspan="4">
+							<input type="button" value="목록으로"/>
+							<input type="submit" value="저장"/>
+							<input type="hidden" th:value="${boardCd}" name="boardCd"/>
+						</td>
+					</tr>
+			</table>
+		</form>
+	</div>
+</html>

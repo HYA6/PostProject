@@ -35,9 +35,9 @@ public class BoardController {
 	};
 	
 	// 게시판 생성하기
-	@PostMapping("/boardCreate")
-	public String boardCreate(BoardDefDto boardDefDto) {
-		log.info("BoardController - boardCreate()");
+	@PostMapping("/insertBoard")
+	public String insertBoard(BoardDefDto boardDefDto) {
+		log.info("BoardController - insertBoard()");
 		
 		// 게시판 분류 코드(난수) 생성
 		Random random = new Random();

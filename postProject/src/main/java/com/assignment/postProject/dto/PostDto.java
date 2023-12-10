@@ -25,7 +25,7 @@ public class PostDto {
 	
 	// entity -> dto
 	public static PostDto toDto(Post post) {
-		return new PostDto(post.getPostId().getPostNo(), post.getPostId().getBoardDef().getBoardCd(), 
+		return new PostDto(post.getPostNo(), post.getBoardDef().getBoardCd(), 
 				post.getPostSj(), post.getPostCn(), post.getRegstrId(), post.getRegDt());
 	};
 	

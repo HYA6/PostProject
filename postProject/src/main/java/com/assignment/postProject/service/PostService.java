@@ -3,13 +3,16 @@ package com.assignment.postProject.service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.assignment.postProject.dto.PostDto;
-import com.assignment.postProject.dto.PostIdDto;
 import com.assignment.postProject.entity.BoardDef;
-import com.assignment.postProject.entity.PostId;
+import com.assignment.postProject.entity.Post;
 import com.assignment.postProject.repository.BoardRepository;
 import com.assignment.postProject.repository.PostRepository;
 
@@ -23,23 +26,39 @@ public class PostService {
 	private BoardRepository boardRepository;
 	@Autowired
 	private PostRepository postRepository;
+	@PersistenceContext
+    private EntityManager entityManager;
 	
 	// 게시판에 따른 게시글 전체 목록 가져오기
 	public List<PostDto> findPostList(String boardCd) {
 		log.info("PostService - findBoardList()");
 		
-		// 게시판 정보 가져오기
-		BoardDef def = boardRepository.findById(boardCd)
-				.orElseThrow(() -> new IllegalArgumentException("게시글 불러오기 실패! 대상 게시판이 없습니다."));
+		// 게시판 여부 확인
+		boardRepository.findById(boardCd)
+				.orElseThrow(() -> new IllegalArgumentException("게시글 조회 실패! 대상 게시판이 없습니다."));
 		
-		// postId에 boardCd 저장
-		PostIdDto id = new PostIdDto();
-		id.setBoardCd(boardCd);
-		
-		return postRepository.findById(PostId.toEntity(id, def))
+		return postRepository.findByBoardCd(boardCd)
 				.stream()
 				.map(posts -> PostDto.toDto(posts))
 				.collect(Collectors.toList());
+	};
+	
+	// 게시글 저장
+	@Transactional
+	public void savePost(PostDto postDto) {
+		log.info("PostService - savePost()");
+		
+		// 게시판 정보 가져오기
+		BoardDef def = boardRepository.findById(postDto.getBoardCd())
+				.orElseThrow(() -> new IllegalArgumentException("게시글 저장 실패! 대상 게시판이 없습니다."));
+		
+		// entity로 변환
+		Post post = Post.toEntity(postDto, def);
+		log.info("post: {}", post.getPostSj());
+		
+		// 게시글 저장
+		entityManager.detach(post);
+		postRepository.save(post);
 	};
 
 };

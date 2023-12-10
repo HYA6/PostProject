@@ -32,9 +32,13 @@ public class PostTag {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name="post_no")
-	@JoinColumn(name="board_cd")
-	private Post post; // 글번호, 게시판 분류 코드
+    @JoinColumn(name="post_no", referencedColumnName="postNo")
+	private Post post; // 글번호
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(name = "board_cd", referencedColumnName="boardCd")
+    private BoardDef boardDef; // 게시판 정보
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@OnDelete(action = OnDeleteAction.CASCADE)
@@ -42,8 +46,8 @@ public class PostTag {
 	private Tag tag; // 태그 ID
 	
 	// dto -> entity
-	public static PostTag toEntity(PostTagDto dto, Post post, Tag tag) {
-		return new PostTag(dto.getBoardTagId(), post, tag);
+	public static PostTag toEntity(PostTagDto dto, Post post, BoardDef boardDef, Tag tag) {
+		return new PostTag(dto.getBoardTagId(), post, boardDef, tag);
 	};
 	
 };
